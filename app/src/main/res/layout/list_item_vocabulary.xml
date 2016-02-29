@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dp"
+    android:background="@color/colorWordActive">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/settingsView"
+        android:layout_toStartOf="@+id/settingsView"
+        android:id="@+id/inner_relative_layout">
+
+        <ImageView
+            android:id="@+id/icon_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="6dip"
+            android:layout_marginEnd="6dip"
+            android:contentDescription="@string/vocanulary_img_description"
+            android:src="@drawable/books"/>
+        <TextView
+            android:id="@+id/secondLine"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/icon_list_item"
+            android:layout_toEndOf="@id/icon_list_item"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/progressBar"
+            android:layout_toStartOf="@+id/progressBar"
+            android:text="@string/count_word_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/firstLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/secondLine"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toRightOf="@id/icon_list_item"
+            android:layout_toEndOf="@id/icon_list_item"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_below="@+id/firstLine"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="visible"
+            android:progress="@integer/default_progress" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/settingsView"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/settings_voc"
+        android:contentDescription="@string/settings_img_description"
+        android:layout_marginLeft="6dip"
+        android:layout_marginStart="6dip"/>
+
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_new_word"
+        android:icon="@drawable/add"
+        android:title="@string/btn_add_new_word_txt"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_start"
+        android:icon="@drawable/start"
+        android:title="@string/action_start"
+        app:showAsAction="ifRoom"/>
+
+</menu>

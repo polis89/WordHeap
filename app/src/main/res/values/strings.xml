@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Words Heap</string>
+    <string name="count_word_text">Words: %1$d</string>
+    <string name="vocanulary_img_description">Vocabulary</string>
+    <string name="settings_img_description">Vocabulary Settings</string>
+    <string name="btn_add_new_vocabulary_txt" >Add new</string>
+    <string name="hint_enter_vocabulary_name">Enter name</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="addMewVocabularyTitle">Add new vocabulary</string>
+    <string name="settings_rename_txt">Rename</string>
+    <string name="settings_reset_txt">Reset</string>
+    <string name="settings_delete_txt">Delete</string>
+    <string name="settings_title">Choose an option</string>
+    <string name="voc_delete_accept">Delete \"%s\" dictionary?</string>
+    <string name="true_false_score">Score: %d</string>
+    <string name="true_false_multiple">Multiple: %d</string>
+    <string name="word_delete_accept">Delete word \"%s\"?</string>
+    <string name="delete_btn_txt">Delete</string>
+    <string name="rename_vocabulary_message">Rename \"%s\" vocabulary </string>
+    <string name="rename_btn_txt">Rename</string>
+    <string name="hint_enter_new_vocabulary_name">Enter new name</string>
+    <string name="validate_vocabulary_name_failed">Invalid name</string>
+    <string name="btn_add_new_word_txt">Add new word</string>
+    <string name="hint_enter_word_name">Enter word</string>
+    <string name="hint_enter_word_translate">Enter translate</string>
+    <string name="addMewWordTitle">Add new word</string>
+    <string name="invalid_new_word_value">Invalid word</string>
+    <string name="word_change_dialog_msg">Change word</string>
+    <string name="change_word_btn_txt">Change</string>
+    <string name="validate_word_failed">Word passt nicht</string>
+    <string name="btn_learn">Learn!</string>
+    <string name="vocabulary_activity_title">Choose vocabulary</string>
+    <string name="word_activity_title">Choose words</string>
+    <string name="action_start">start</string>
+    <string name="abstract_game_title">Learn</string>
+    <string name="true_false_game_false">False</string>
+    <string name="game_true_false_true">True</string>
+    <string-array name="settings_vocabular_items">
+        <item>"Rename"</item>
+        <item>"Reset"</item>
+        <item>"Delete"</item>
+    </string-array>
+    <string-array name="settings_word_items">
+        <item>"Change"</item>
+        <item>"Reset"</item>
+        <item>"Delete"</item>
+    </string-array>
+</resources>
