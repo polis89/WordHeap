@@ -18,7 +18,7 @@ import ru.polis.wordsheap.database.DBService;
 import ru.polis.wordsheap.objects.Vocabulary;
 
 public class ListVocabularyFragment extends ListFragment{
-    public static final String TAG = "ListVocabularyFragmentLOG";
+    public static final String TAG = "ListVocabularyFragLOG";
     private ArrayAdapter<Vocabulary> adapter;
     private List<Vocabulary> listVocabularys;
 

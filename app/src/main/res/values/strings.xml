@@ -7,6 +7,8 @@
     <string name="hint_enter_vocabulary_name">Enter name</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
     <string name="addMewVocabularyTitle">Add new vocabulary</string>
     <string name="settings_rename_txt">Rename</string>
     <string name="settings_reset_txt">Reset</string>
@@ -36,6 +38,10 @@
     <string name="abstract_game_title">Learn</string>
     <string name="true_false_game_false">False</string>
     <string name="game_true_false_true">True</string>
+    <string name="true_false_start">Tap 2 start</string>
+    <string name="OK">Ok</string>
+    <string name="results">Results</string>
+    <string name="result_true_false">Your result is: %s</string>
     <string-array name="settings_vocabular_items">
         <item>"Rename"</item>
         <item>"Reset"</item>

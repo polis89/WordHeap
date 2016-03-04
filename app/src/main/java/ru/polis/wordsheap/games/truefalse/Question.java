@@ -4,11 +4,13 @@ public class Question {
     private String question;
     private String answer;
     private boolean result;
+    private int idInArray;
 
-    public Question(String question, String answer, boolean result) {
+    public Question(String question, String answer, boolean result, int id) {
         this.question = question;
         this.answer = answer;
         this.result = result;
+        this.idInArray = id;
     }
 
     public String getQuestion() {
@@ -21,6 +23,10 @@ public class Question {
 
     public boolean getResult() {
         return result;
+    }
+
+    public int getIdInArray() {
+        return idInArray;
     }
 
     @Override

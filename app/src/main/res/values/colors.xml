@@ -7,4 +7,6 @@
     <color name="colorWordNotActive">#BCAAA4</color>
     <color name="background">#D7CCC8</color>
     <color name="white">#FFFFFF</color>
+    <color name="true_false_yes">#2e7d32</color>
+    <color name="true_false_no">#b71c1c</color>
 </resources>
