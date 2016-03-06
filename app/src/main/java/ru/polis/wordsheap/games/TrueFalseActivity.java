@@ -17,6 +17,7 @@ import ru.polis.wordsheap.database.DBService;
 import ru.polis.wordsheap.games.truefalse.Question;
 import ru.polis.wordsheap.objects.Word;
 
+
 public class TrueFalseActivity extends AbstractGameActivity{
     public static final Integer PLAY_TIME = 20;
     public static final Integer RIGHT_ANSWER_PROGRESS = 1;
@@ -34,8 +35,7 @@ public class TrueFalseActivity extends AbstractGameActivity{
     private TextView multipleView;
     private TextView questionView;
     private TextView answerView;
-    private TextView chronometrView;
-
+    private TextView chronometerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +50,13 @@ public class TrueFalseActivity extends AbstractGameActivity{
         multipleView = (TextView) gameView.findViewById(R.id.gameTrueFalseMnozitelView);
         questionView = (TextView) gameView.findViewById(R.id.gameTrueFalseQuestionView);
         answerView = (TextView) gameView.findViewById(R.id.gameTrueFalseAnswerView);
-        chronometrView = (TextView) gameView.findViewById(R.id.chronometer);
+        chronometerView = (TextView) gameView.findViewById(R.id.chronometer);
 
         questionView.setText(R.string.true_false_start);
         answerView.setText("");
         scoreView.setText(getResources().getString(R.string.true_false_score, score));
         multipleView.setText(getResources().getString(R.string.true_false_multiple, scoreStep));
-        chronometrView.setText(PLAY_TIME.toString());
+        chronometerView.setText(PLAY_TIME.toString());
 
         relativeLayout.setOnClickListener(this);
     }
@@ -76,7 +76,6 @@ public class TrueFalseActivity extends AbstractGameActivity{
     //Called after Time limit
     private void stopGame() {
         showResults();
-        endOfGame();
     }
 
     //Called after answer or by startGame
@@ -133,10 +132,10 @@ public class TrueFalseActivity extends AbstractGameActivity{
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.results);
         builder.setMessage(getResources().getString(R.string.result_true_false, score));
-        builder.setNegativeButton(R.string.OK, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                endOfGame();
             }
         });
         builder.create().show();
@@ -185,7 +184,7 @@ public class TrueFalseActivity extends AbstractGameActivity{
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            chronometrView.setText(values[0].toString());
+            chronometerView.setText(values[0].toString());
         }
 
         @Override

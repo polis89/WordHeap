@@ -19,7 +19,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="ru.polis.wordsheap.ListWordFragment"
+        android:name="ru.polis.wordsheap.WordsActivity$ListWordFragment"
         android:id="@+id/fragmentWord" />
 
 </LinearLayout>
