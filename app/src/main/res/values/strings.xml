@@ -42,6 +42,14 @@
     <string name="OK">Ok</string>
     <string name="results">Results</string>
     <string name="result_true_false">Your result is: %s</string>
+    <string name="btn_choose_language_txt">Choose language</string>
+    <string name="chooseLanguageTitle">Choose Vocabulary</string>
+    <string name="languageDescriptionDeRus"><![CDATA[German -> Russian]]></string>
+    <string name="languageDescriptionDeEng"><![CDATA[German -> English]]></string>
+    <string name="languageDescriptionEngRus"><![CDATA[English -> Russian]]></string>
+    <string name="languageDescriptionEngDe"><![CDATA[English -> German]]></string>
+    <string name="languageDescriptionRusEng"><![CDATA[Russian -> English]]></string>
+    <string name="languageDescriptionRusDe"><![CDATA[Russian -> German]]></string>
     <string-array name="settings_vocabular_items">
         <item>"Rename"</item>
         <item>"Reset"</item>

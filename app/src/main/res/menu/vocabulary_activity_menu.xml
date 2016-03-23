@@ -8,4 +8,9 @@
         android:title="@string/btn_add_new_vocabulary_txt"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/choose_language"
+        android:title="@string/btn_choose_language_txt"
+        app:showAsAction="ifRoom"/>
+
 </menu>

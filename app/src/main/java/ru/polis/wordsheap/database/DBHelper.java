@@ -13,10 +13,9 @@ import java.io.OutputStream;
 
 public class DBHelper extends SQLiteOpenHelper{
     public static final String TAG = "DBHelperLOG";
-    public static final String DATA_BASE_NAME = "appDB";
     public static final String DATA_BASE_NAME_FULL = "appDB.sqlite";
     private String DB_PATH = "/data/data/ru.polis.wordsheap/databases/";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     private Context context;
 
@@ -27,24 +26,31 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            copydatabase();
-            Log.i(TAG, "Database Copied");
-        } catch(IOException e) {
-            throw new Error("Error copying database");
-        }
-//        db.execSQL("CREATE TABLE " + DBService.TABLE_VOCABULARY_NAME + " ( " +
-//                DBService.TABLE_VOCABULARY_KEY_ID + " integer primary key, " +
-//                DBService.TABLE_VOCABULARY_KEY_NAME + " text UNIQUE )");
-//        db.execSQL("CREATE TABLE " + DBService.TABLE_WORD_NAME + " ( " +
-//                DBService.TABLE_WORD_KEY_ID + " integer primary key, " +
-//                DBService.TABLE_WORD_KEY_NAME + " text, " +
-//                DBService.TABLE_WORD_KEY_TRANSLATE + " text, " +
-//                DBService.TABLE_WORD_KEY_PROGRESS + " INTEGER, " +
-//                DBService.TABLE_WORD_KEY_ACTIVE + " INTEGER, " +
-//                DBService.TABLE_WORD_KEY_VOCABULARY_ID + " INTEGER, " +
-//                "FOREIGN KEY(" + DBService.TABLE_WORD_KEY_VOCABULARY_ID + ") " +
-//                "REFERENCES " + DBService.TABLE_VOCABULARY_NAME + "(" + DBService.TABLE_VOCABULARY_KEY_ID + "))");
+        Log.i(TAG, "---Create Database---");
+//        try {
+//            copydatabase();
+//            Log.i(TAG, "Database Copied");
+//        } catch(IOException e) {
+//            throw new Error("Error copying database");
+//        }
+        db.execSQL("CREATE TABLE " + DBService.TABLE_LANGUAGE_NAME + " ( " +
+                DBService.TABLE_LANGUAGE_KEY_ID + " integer primary key, " +
+                DBService.TABLE_LANGUAGE_KEY_NAME + " text UNIQUE )");
+        db.execSQL("CREATE TABLE " + DBService.TABLE_VOCABULARY_NAME + " ( " +
+                DBService.TABLE_VOCABULARY_KEY_ID + " integer primary key, " +
+                DBService.TABLE_VOCABULARY_KEY_NAME + " text UNIQUE, " +
+                DBService.TABLE_VOCABULARY_KEY_LANGUAGE_ID + " INTEGER, " +
+                "FOREIGN KEY(" + DBService.TABLE_VOCABULARY_KEY_LANGUAGE_ID + ") " +
+                "REFERENCES " + DBService.TABLE_LANGUAGE_NAME + "(" + DBService.TABLE_LANGUAGE_KEY_ID + "))");
+        db.execSQL("CREATE TABLE " + DBService.TABLE_WORD_NAME + " ( " +
+                DBService.TABLE_WORD_KEY_ID + " integer primary key, " +
+                DBService.TABLE_WORD_KEY_NAME + " text, " +
+                DBService.TABLE_WORD_KEY_TRANSLATE + " text, " +
+                DBService.TABLE_WORD_KEY_PROGRESS + " INTEGER, " +
+                DBService.TABLE_WORD_KEY_ACTIVE + " INTEGER, " +
+                DBService.TABLE_WORD_KEY_VOCABULARY_ID + " INTEGER, " +
+                "FOREIGN KEY(" + DBService.TABLE_WORD_KEY_VOCABULARY_ID + ") " +
+                "REFERENCES " + DBService.TABLE_VOCABULARY_NAME + "(" + DBService.TABLE_VOCABULARY_KEY_ID + "))");
     }
 
     private void copydatabase() throws IOException {
@@ -84,8 +90,9 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists" + DBService.TABLE_WORD_NAME);
-        db.execSQL("drop table if exists" + DBService.TABLE_VOCABULARY_NAME);
+        Log.d(TAG, "---Update Database---");
+        db.execSQL("drop table if exists " + DBService.TABLE_WORD_NAME);
+        db.execSQL("drop table if exists " + DBService.TABLE_VOCABULARY_NAME);
         onCreate(db);
     }
 }
