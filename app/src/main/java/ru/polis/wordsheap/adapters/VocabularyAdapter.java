@@ -96,12 +96,12 @@ public class VocabularyAdapter extends ArrayAdapter<Vocabulary> implements View.
                     return;
                 case 1:
                     DBService.getInstance(getContext()).resetVocabularyProgress(vocabulary);
+                    // TODO: 28.03.2016 change getAllVocs to getVocsByLang
                     vocabularyList = DBService.getInstance(getContext()).getAllVocabularys();
                     notifyDataSetChanged();
                     return;
                 case 2:
                     showDeleteDialog();
-                    return;
             }
         }
 

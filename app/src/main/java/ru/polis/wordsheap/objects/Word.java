@@ -4,12 +4,12 @@ package ru.polis.wordsheap.objects;
 import java.io.Serializable;
 
 public class Word implements Serializable{
-    private int id;
+    private long id;
     private String word;
     private String translate;
     private boolean active;
     private int progress;
-    private int vocabulary_id;
+    private long vocabulary_id;
 
     public Word(String word, String translate){
         this.word = word;
@@ -18,7 +18,7 @@ public class Word implements Serializable{
         progress = 0;
     }
 
-    public Word(int id, String name, String translate, int vocabulary_id) {
+    public Word(long id, String name, String translate, long vocabulary_id) {
         this(name, translate);
         this.id = id;
         this.vocabulary_id = vocabulary_id;
@@ -33,7 +33,7 @@ public class Word implements Serializable{
         this.vocabulary_id = vocabulary_id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

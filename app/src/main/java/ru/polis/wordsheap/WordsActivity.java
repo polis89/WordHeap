@@ -123,7 +123,7 @@ public class WordsActivity extends AppCompatActivity{
                             String translate = editTextTranslate.getText().toString();
                             if (DBService.getInstance(getActivity()).validateWordData(name, translate)) {
                                 long id = DBService.getInstance(getActivity()).addWord(new Word(name, translate), vocabulary);
-                                listWords.add(new Word((int) id, name, translate, vocabulary.getId()));
+                                listWords.add(new Word(id, name, translate, vocabulary.getId()));
                                 adapter.notifyDataSetChanged();
                             } else {
                                 Toast.makeText(getActivity(), getString(R.string.invalid_new_word_value), Toast.LENGTH_SHORT).show();

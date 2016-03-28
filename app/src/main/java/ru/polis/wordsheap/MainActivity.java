@@ -5,7 +5,6 @@ import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,12 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.polis.wordsheap.adapters.VocabularyAdapter;
@@ -128,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences preference = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
                             SharedPreferences.Editor editor = preference.edit();
                             editor.putString(LANGUAGE_PREFERENCE, newLanguage.toString());
-                            editor.commit();
+                            editor.apply();
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -151,10 +148,9 @@ public class MainActivity extends AppCompatActivity {
             super.onResume();
             Log.i(TAG, "--onResume--");
 
-            //Check number of Languages (if 0 -> need to add Values)
-            int languagesCount = DBService.getInstance(getActivity()).getLanguagesCount();
-            if(languagesCount == 0) {
-                DBService.getInstance(getActivity()).addTestedValues();
+            //Check number of Vocabularys (if 0 -> need to add Values)
+            if(DBService.getInstance(getActivity()).getAllVocabularys().size() == 0) {
+                DBService.getInstance(getActivity()).addStartValues(this.getResources().getAssets());
             }
             listVocabularys = DBService.getInstance(getActivity()).getAllVocabularysByLanguage(((MainActivity)getActivity()).language);
 

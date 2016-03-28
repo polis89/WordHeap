@@ -2,10 +2,13 @@ package ru.polis.wordsheap.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import ru.polis.wordsheap.objects.Vocabulary;
 import ru.polis.wordsheap.objects.Word;
 
 public class DBService {
+    public static final String VOCABULARYS_FILE_PATH = "vocabularys"; //in assets
     public static final String TAG = "db_service_log";
 
     public static final String TABLE_LANGUAGE_NAME = "language";
@@ -84,7 +88,6 @@ public class DBService {
 
     public int getLanguagesCount(){
         Log.i(TAG, "--- getLanguagesCount ---");
-        List<Vocabulary> list = new ArrayList<>();
         SQLiteDatabase dataBase = dbHelper.getReadableDatabase();
         Cursor cursor = dataBase.query(TABLE_LANGUAGE_NAME, null, null, null, null, null, null);
         int count = 0;
@@ -99,6 +102,7 @@ public class DBService {
     }
 
     public long addVocabulary(Vocabulary vocabulary){
+        Log.i(TAG, "--- addVocabulary /" + vocabulary.getName() + "/ ---");
         String name = vocabulary.getName();
         int language_id = this.getLanguageID(vocabulary.getLanguage());
         SQLiteDatabase dataBase = dbHelper.getWritableDatabase();
@@ -183,23 +187,29 @@ public class DBService {
         }
     }
 
-//    public Vocabulary getVocabularyByID(int id){
-//        SQLiteDatabase dataBase = dbHelper.getReadableDatabase();
-//        Cursor cursor = dataBase.query(
-//                TABLE_VOCABULARY_NAME,
-//                null,
-//                TABLE_VOCABULARY_KEY_ID + " = ? ",
-//                new String[]{String.valueOf(id)},
-//                null,
-//                null,
-//                null);
-//        cursor.moveToFirst();
-//        int id_d = cursor.getInt(cursor.getColumnIndex(TABLE_VOCABULARY_KEY_ID));
-//        String name = cursor.getString(cursor.getColumnIndex(TABLE_VOCABULARY_KEY_NAME));
-//        cursor.close();
-//        dbHelper.close();
-//        return new Vocabulary(id_d, name);
-//    }
+    public Vocabulary getVocabularyByID(long id){
+        SQLiteDatabase dataBase = dbHelper.getReadableDatabase();
+        Cursor cursor = dataBase.query(
+                TABLE_VOCABULARY_NAME,
+                null,
+                TABLE_VOCABULARY_KEY_ID + " = ? ",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null);
+        if(cursor.moveToFirst()) {
+            long id_d = cursor.getLong(cursor.getColumnIndex(TABLE_VOCABULARY_KEY_ID));
+            String name = cursor.getString(cursor.getColumnIndex(TABLE_VOCABULARY_KEY_NAME));
+            Language language = getLanguageByID(cursor.getInt(cursor.getColumnIndex(TABLE_VOCABULARY_KEY_LANGUAGE_ID)));
+            cursor.close();
+            dbHelper.close();
+            return new Vocabulary(id_d, name, language);
+        } else {
+            cursor.close();
+            dbHelper.close();
+            return null;
+        }
+    }
 
     public boolean renameVocabulary(Vocabulary vocabulary, String newName) {
         if(!validateVocabularyName(newName)) return false;
@@ -234,7 +244,7 @@ public class DBService {
         String translate = word.getTranslate();
         int active = word.isActive() ? 1 : 0;
         int progress = word.getProgress();
-        int voc_id = vocabulary.getId();
+        long voc_id = vocabulary.getId();
         SQLiteDatabase dataBase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TABLE_WORD_KEY_NAME, name);
@@ -361,8 +371,37 @@ public class DBService {
         return !(name.equals("") || translate.equals(""));
     }
 
-    public void addTestedValues(){
-        Log.i(TAG, "--- addTestedValues ---");
+    public void addStartValues(AssetManager assets){
+        Log.i(TAG, "--- addStartValues ---");
+        if(this.getLanguagesCount() == 0) {
+            this.addLanguagesFromEnum();
+        }
+
+        try {
+            for(String s : assets.list(VOCABULARYS_FILE_PATH)){
+                Log.i(TAG, "Assets: " + s);
+                InputStream openIS = assets.open(VOCABULARYS_FILE_PATH + "/" + s);
+                XMLParser xmlParser = new XMLParser(openIS);
+                openIS.close();
+                Log.i(TAG, "fileIsVocXML: " + xmlParser.fileIsVocabularyXML());
+                if(xmlParser.fileIsVocabularyXML()) {
+                    Vocabulary newVoc = xmlParser.getVocabulary();
+                    long newVocID = this.addVocabulary(newVoc);
+                    newVoc = this.getVocabularyByID(newVocID);
+                    Log.i(TAG, "New Voc Added: " + newVoc.toString());
+                    ArrayList<Word> newWords = xmlParser.getWords();
+                    for (Word word : newWords) {
+                        this.addWord(word, newVoc);
+                        Log.i(TAG, "New Word Added: " + word.toString());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addLanguagesFromEnum() {
         for (Language language : Language.values()){
             try {
                 addLanguage(language);
@@ -370,32 +409,5 @@ public class DBService {
                 Log.i(TAG, "-- Trying to add " + language.name() + ", but exist --");
             }
         }
-
-        this.addVocabulary(new Vocabulary("DE_RUS_TEST_FULL", Language.DE_RUS));
-        this.addVocabulary(new Vocabulary("DE_RUS_TEST_EMPTY", Language.DE_RUS));
-        this.addVocabulary(new Vocabulary("ENG_RUS_TEST_EMPTY", Language.ENG_RUS));
-        this.addVocabulary(new Vocabulary("ENG_RUS_TEST_FULL", Language.RUS_DE));
-        this.addVocabulary(new Vocabulary("RUS_ENG_TEST_EMPTY", Language.RUS_DE));
-
-        List<Vocabulary> deRusVocs = getAllVocabularysByLanguage(Language.DE_RUS);
-        List<Vocabulary> engRusVocs = getAllVocabularysByLanguage(Language.ENG_RUS);
-        List<Vocabulary> rusDeVocs = getAllVocabularysByLanguage(Language.RUS_DE);
-        List<Vocabulary> rusEngVocs = getAllVocabularysByLanguage(Language.RUS_ENG);
-
-        Log.d(TAG, "-- deRusVocs.size(2) = " + deRusVocs.size() + " --");
-        Log.d(TAG, "-- engRusVocs.size(2) = " + engRusVocs.size() + " --");
-        Log.d(TAG, "-- rusDeVocs.size(1) = " + rusDeVocs.size() + " --");
-        Log.d(TAG, "-- rusEngVocs.size(0) = " + rusEngVocs.size() + " --");
-
-        Vocabulary deRusFull = deRusVocs.get(0);
-        Vocabulary rusDeFull = rusDeVocs.get(0);
-
-        addWord(new Word("mutter", "мама"), deRusFull);
-        addWord(new Word("vater", "папа"), deRusFull);
-        addWord(new Word("bruder", "брат"), deRusFull);
-
-        addWord(new Word("брат", "bruder"), rusDeFull);
-        addWord(new Word("папа", "vater"), rusDeFull);
-
     }
 }

@@ -1,7 +1,5 @@
 package ru.polis.wordsheap.objects;
 
-import android.util.Log;
-
 import java.io.Serializable;
 
 import ru.polis.wordsheap.enums.Language;
@@ -9,7 +7,7 @@ import ru.polis.wordsheap.enums.Language;
 public class Vocabulary implements Serializable{
     public static final String TAG = "VocabularyLog";
 
-    private int id;
+    private long id;
     private String name;
     private int countWord;
     private Language language;
@@ -22,7 +20,7 @@ public class Vocabulary implements Serializable{
         progressVocabulary = 0;
     }
 
-    public Vocabulary(int id, String name, Language language) {
+    public Vocabulary(long id, String name, Language language) {
         this(name, language);
         this.id = id;
     }
@@ -47,7 +45,7 @@ public class Vocabulary implements Serializable{
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
